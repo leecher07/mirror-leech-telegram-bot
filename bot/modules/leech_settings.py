@@ -23,14 +23,14 @@ def getleechinfo(from_user):
         and AS_DOCUMENT
     ):
         ltype = "DOCUMENT"
-        buttons.sbutton("Send As Media", f"leechset {user_id} med")
+        buttons.sbutton("🎞️Send As Media", f"leechset {user_id} med")
     else:
         ltype = "MEDIA"
-        buttons.sbutton("Send As Document", f"leechset {user_id} doc")
+        buttons.sbutton("📃Send As Document", f"leechset {user_id} doc")
 
     if ospath.exists(thumbpath):
         thumbmsg = "Exists"
-        buttons.sbutton("Delete Thumbnail", f"leechset {user_id} thumb")
+        buttons.sbutton("☢️Delete Thumbnail", f"leechset {user_id} thumb")
     else:
         thumbmsg = "Not Exists"
 
