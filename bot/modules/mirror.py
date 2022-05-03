@@ -196,23 +196,23 @@ class MirrorListener:
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        msg = f"<b>Name: </b><code>{escape(name)}</code> ."
+        msg = f"."
         if self.isLeech:
-            msg += f'<b>Total Files: </b>{folders}'
+            msg += f'.'
             if typ != 0:
-                msg += f'\n<b>Corrupted Files: </b>{typ}'
+                msg += f'.'
             if not files:
                 sendMessage(self.bot, self.message)
             else:
                 fmsg = ''
                 for index, (name, link) in enumerate(files.items(), start=1):
-                    fmsg += f"{index}. <a href='{link}'>{name}</a>\n"
+                    fmsg += f"."
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         sendMessage(msg, self.bot, self.message)
                         sleep(1)
                         fmsg = ''
                 if fmsg != '':
-                    sendMessage(self.bot, self.message)
+                    sendMessage(msg, self.bot, self.message)
         else:
             msg += f'\n\n<b>Type: </b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
@@ -347,7 +347,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                 tg_downloader = TelegramDownloadHelper(listener)
                 tg_downloader.add_download(message, f'{DOWNLOAD_DIR}{listener.uid}/', name)
                 if multi > 1:
-                    sleep(410)
+                    sleep(180)
                     nextmsg = type('nextmsg', (object, ), {'chat_id': message.chat_id, 'message_id': message.reply_to_message.message_id + 1})
                     nextmsg = sendMessage(message_args[0], bot, nextmsg)
                     nextmsg.from_user.id = message.from_user.id
@@ -422,7 +422,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
         Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, name, auth)).start()
 
     if multi > 1:
-        sleep(410)
+        sleep(180)
         nextmsg = type('nextmsg', (object, ), {'chat_id': message.chat_id, 'message_id': message.reply_to_message.message_id + 1})
         msg = message_args[0]
         if len(mesg) > 2:
