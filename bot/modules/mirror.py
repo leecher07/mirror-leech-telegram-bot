@@ -202,7 +202,7 @@ class MirrorListener:
             if typ != 0:
                 msg += f'\n<b>Corrupted Files: </b>{typ}'
             if not files:
-                sendMessage(msg, self.bot, self.message)
+                sendMessage(self.bot, self.message)
             else:
                 fmsg = ''
                 for index, (name, link) in enumerate(files.items(), start=1):
@@ -212,7 +212,7 @@ class MirrorListener:
                         sleep(1)
                         fmsg = ''
                 if fmsg != '':
-                    sendMessage(msg, self.bot, self.message)
+                    sendMessage(self.bot, self.message)
         else:
             msg += f'\n\n<b>Type: </b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
